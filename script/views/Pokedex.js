@@ -4,15 +4,19 @@ export default class Pokedex {
 
     async render() {
         
-        let tbody = document.querySelector('#tbody_pokemon');
+        let pokedex = `
+            <table>
+                <tbody id = "tbody_pokemon">`;
         
-        let row;
-        
+        let row = ``;
         for (let i = 1; i <= 151; i++) {
-        
             if ((i - 1) % 10 === 0) {
-                row = document.createElement("tr");
-                tbody.appendChild(row);
+                if(row != ``){
+                    row += `</tr>`;
+                    pokedex += row;
+                    console.log(1)
+                }
+                row = `<tr>`;
             }
         
             let pokemon = await PokemonProvider.getPokemon(i);
@@ -22,27 +26,21 @@ export default class Pokedex {
                 continue;
             }
         
-            let cell = document.createElement("td");
-        
-            cell.innerHTML = `
-                <div class="pokemon-card">
-                    <img src="${pokemon.sprites.front_default}" alt="${pokemon.name}">
-                    <p>${pokemon.name}</p>
-                </div>
+            let cell = `
+                <td>
+                    <div class="pokemon-card">
+                        <img src="${pokemon.sprites.front_default}" alt="${pokemon.name}">
+                        <p>${pokemon.name}</p>
+                    </div>
+                </td>
             `;
-        
-            row.appendChild(cell);
-
+            row += cell;
         }
-        
+        row += `</tr>`;
+        pokedex += row + `
+                </tbody>
+            </table>`;
 
-
-        return `
-            <section>
-                <h2>About</h2>
-                <p>texte de fou.</p>
-            </section>
-        `;
+        return pokedex
     }
-
 }    
