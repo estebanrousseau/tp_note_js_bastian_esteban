@@ -1,5 +1,11 @@
-const routes = {
+import Utils from "./services/Utils.js";
+import PokemonShow from "./views/PokemonShow.js";
+import Error404 from "./views/Error404.js";
+import Home from "./views/Home.js";
 
+const routes = {
+    '/' : Home, 
+    '/:id' : PokemonShow,
 }
 
 const router = async () => {
@@ -7,14 +13,18 @@ const router = async () => {
 
     let request = Utils.parsRequestURL();
 
-    let parsedURL = (request.ressource ? '/' + request.ressource : '/') + 
-                    (request.id ? '/:id' : '') + 
-                    (request.verb ? '/' + request.verb : '');
+    let parsedURL = (request.id ? '/:id' : ''); // (request.ressource ? '/' + request.ressource : '/') + 
 
-    let page = routes[parsedURL] ? new routes[parsedURL] : Error404;
+    console.log(parsedURL)
+    let page = routes[parsedURL] ? new routes[parsedURL] : new Error404();
 
     content.innerHTML = await page.render();
 }
 
 window.addEventListener('hashchange', router);
 window.addEventListener('load', router);
+
+
+
+
+
