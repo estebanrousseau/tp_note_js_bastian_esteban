@@ -4,7 +4,7 @@ import Error404 from "./views/Error404.js";
 import Pokedex from "./views/Pokedex.js";
 
 const routes = {
-    '/' : Pokedex, 
+    '/' : Pokedex,
     '/:id' : PokemonShow,
 }
 
