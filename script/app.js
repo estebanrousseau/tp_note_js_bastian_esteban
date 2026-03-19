@@ -12,6 +12,7 @@ const router = async () => {
     const content = null || document.querySelector('#main');
 
     let request = Utils.parsRequestURL();
+    console.log(request.id)
 
     let parsedURL = (request.id ? '/:id' : '/'); // (request.ressource ? '/' + request.ressource : '/') + 
 
