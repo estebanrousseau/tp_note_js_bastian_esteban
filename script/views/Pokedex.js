@@ -14,7 +14,6 @@ export default class Pokedex {
                 if(row != ``){
                     row += `</tr>`;
                     pokedex += row;
-                    console.log(1)
                 }
                 row = `<tr>`;
             }
@@ -29,8 +28,10 @@ export default class Pokedex {
             let cell = `
                 <td>
                     <div class="pokemon-card">
-                        <img src="${pokemon.sprites.front_default}" alt="${pokemon.name}">
-                        <p>${pokemon.name}</p>
+                        <a href="/#/${pokemon.id}">
+                            <img src="${pokemon.sprites.front_default}" alt="${pokemon.name}">
+                            <p>${pokemon.name}</p>
+                        </a>
                     </div>
                 </td>
             `;

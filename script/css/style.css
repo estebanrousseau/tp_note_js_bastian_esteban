@@ -38,3 +38,9 @@ td {
     font-size: 14px;
     text-transform: capitalize;
 }
+
+.pokemon-card a {
+    text-decoration: none;
+    color: inherit;
+}
+
