@@ -1,9 +1,10 @@
 import { ENDPOINT } from "../config.js";   
 
 export default class PokemonProvider {
-    static fetchPokemon = async ()=> {
+    static fetchPokemon = async (page)=> {
         try {
-            const response = await fetch(`${ENDPOINT}/pokemon`); 
+
+            const response = await fetch(`${ENDPOINT}/pokemon?offset=${20*(page-1)}&limit=20`); 
             const json = await response.json();
             return json.data; 
             
