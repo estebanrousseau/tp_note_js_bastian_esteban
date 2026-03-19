@@ -16,6 +16,7 @@ export default class PokemonShow {
         // HTML complet
         let view = `
 <section class="pokemon-page">
+    <audio autoplay src="${pokemon.cries.latest}"></audio>
 
     <!-- HEADER: Image + Infos + Audio -->
     <div class="pokemon-header pokemon-main-card">
