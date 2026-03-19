@@ -48,10 +48,11 @@ export default class PokemonShow {
             <h2>Stats</h2>
             ${(pokemon.stats).map(stat => `
                 <div class="stat">
-                    <span>${stat.stat.name}</span>
+                    <span>${stat.stat.name} : ${stat.base_stat}</span>
                     <div class="bar">
                         <div style="width:${stat.base_stat}%"></div>
                     </div>
+                    
                 </div>
             `).join("")}
         </div>
