@@ -10,7 +10,7 @@ export default class Pokedex {
         
         let row = ``;
         for (let i = 1; i <= 151; i++) {
-            if ((i - 1) % 10 === 0) {
+            if ((i - 1) % 5 === 0) {
                 if(row != ``){
                     row += `</tr>`;
                     pokedex += row;
