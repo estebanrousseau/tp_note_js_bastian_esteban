@@ -13,7 +13,8 @@ const router = async () => {
 
     let request = Utils.parsRequestURL();
 
-    let parsedURL = (request.id ? '/:id' : '/'); // (request.ressource ? '/' + request.ressource : '/') + 
+    let parsedURL = (request.id ? '/:id' : '/');
+                    // (request.param ? '/?page' : ''); // (request.ressource ? '/' + request.ressource : '/') + 
 
     console.log(parsedURL)
     let page = routes[parsedURL] ? new routes[parsedURL] : new Error404();

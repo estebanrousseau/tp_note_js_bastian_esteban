@@ -4,12 +4,18 @@ export default class Pokedex {
 
     async render() {
         
+        let params = new URLSearchParams(document.location.search);
+        let numero_page = params.get("page"); // is the string "Jonathan"
+
+        let page = numero_page ?? 1
+        // let pokemons_de_page = await PokemonProvider.fetchPokemon(page);
+
         let pokedex = `
             <table>
                 <tbody id = "tbody_pokemon">`;
         
         let row = ``;
-        for (let i = 1; i <= 151; i++) {
+        for (let i = 1; i <= 20; i++) {
             if ((i - 1) % 5 === 0) {
                 if(row != ``){
                     row += `</tr>`;
@@ -18,8 +24,12 @@ export default class Pokedex {
                 row = `<tr>`;
             }
         
-            let pokemon = await PokemonProvider.getPokemon(i);
-        
+            // let pokemon = pokemons_de_page[i]
+            if(i+(20*(page-1)) > 151){
+                break
+            }
+            let pokemon = await PokemonProvider.getPokemon(i+(20*(page-1)));
+
             if (!pokemon) {
                 console.warn(`Pokemon ${i} not loaded`);
                 continue;
@@ -42,6 +52,42 @@ export default class Pokedex {
                 </tbody>
             </table>`;
 
+        if(page == 1){
+            pokedex += `
+            <button disabled>←</button>`;
+        }
+        else{
+            pokedex += `
+            <a href="/?page=${page-1}">
+                <button>←</button>
+            </a>`;
+        }
+
+
+        for(let i=0; i<8; i++){
+            if(page-1 == i){
+                pokedex += `
+            <button disabled>${i+1}</button>`;
+            }
+            else{
+                pokedex += `
+            <a href="/?page=${i+1}">
+                <button>${i+1}</button>
+            </a>`;
+            }
+        }
+
+        if(page == 8){
+            pokedex += `
+             <button disabled>→</button>`;
+        }
+        else{
+            pokedex += `
+            <a href="/?page=${page+1}">
+                <button>→</button>
+            </a>`;
+        }
+
         return pokedex
     }
-}    
+}

@@ -4,8 +4,10 @@ const Utils = {
         let r = url.split('/');
         let request = {
             id : null,
+            // param : null
         };
         request.id = r[1];
+        // request.param = r[2]
         return request;
     }
 }
