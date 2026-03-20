@@ -116,8 +116,10 @@ td {
 
 .pokemon-page {
     max-width: 1000px;
-    margin: 40px auto;
+    justify-self: center;
     padding: 20px;
+    width: 100%;
+    height: 100%;
 }
 
 /* HEADER */
@@ -255,4 +257,17 @@ td {
     height: 40px;
     margin-right: 10px;
     cursor: pointer;
+}
+
+.pokemon_show{
+    display: grid;
+    grid-template-columns: 15% 70% 15%;
+}
+
+.other_pokemon{
+    justify-self: center;
+    align-self: start;
+    width: 200px;
+    height: 200px;
+    margin-top: 200px;
 }
