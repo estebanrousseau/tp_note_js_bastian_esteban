@@ -39,10 +39,11 @@ export default class PokemonShow {
 
         if(pokemon[2] != null){
             view += `
-                <div class="pokemon-card">
+                <div class="other_pokemon_detail">
                     <a href="/#/${pokemon[2].id}">
                         <img src="${pokemon[2].sprites.front_default}" alt="${pokemon[2].name}">
-                        <p>${pokemon[2].name}</p>
+                        <p class="nom_pokemon">${pokemon[2].name}</p>
+                        <p class="fleche"><font size="10pt">←</font></p>
                     </a>
                 </div>
             `;
@@ -108,10 +109,11 @@ export default class PokemonShow {
 
         if(pokemon[1] != null){
             view += `
-                <div class="pokemon-card">
+                <div class="other_pokemon_detail">
                     <a href="/#/${pokemon[1].id}">
                         <img src="${pokemon[1].sprites.front_default}" alt="${pokemon[1].name}">
-                        <p>${pokemon[1].name}</p>
+                        <p class="nom_pokemon">${pokemon[1].name}</p>
+                        <p class="fleche"><font size="10pt">→</font></p>
                     </a>
                 </div>
             `;
