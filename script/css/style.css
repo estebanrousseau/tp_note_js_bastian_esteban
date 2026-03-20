@@ -197,18 +197,24 @@ td {
 
 .bar div {
     height: 100%;
-    background: linear-gradient(90deg, #4facfe, #00f2fe);
+    /* background: linear-gradient(90deg, #4facfe, #00f2fe); */
     border-radius: 12px;
     width: 0%;
     transition: width 1s ease-in-out; 
 }
 
-.stat.strength .bar div {
-    background: linear-gradient(90deg, #ff5959, #ff1f1f);
+/* Conditions */
+.less_50{
+    background: linear-gradient(90deg, #ff1f1f, #ff1f50);
 }
-
-.stat.speed .bar div {
-    background: linear-gradient(90deg, #ffcc00, #ffaa00);
+.less_100{
+    background: linear-gradient(90deg, #ff9100, #fffb00);
+}
+.less_150{
+    background: linear-gradient(90deg, #15ff00, #c8ff00);
+}
+.less_255{
+    background: linear-gradient(90deg, #4facfe, #00f2fe);
 }
 
 /* ITEM */

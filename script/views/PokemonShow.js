@@ -87,7 +87,12 @@ export default class PokemonShow {
                             <div class="stat">
                                 <span>${stat.stat.name} : ${stat.base_stat}</span>
                                 <div class="bar">
-                                    <div style="width:${((stat.base_stat)*100)/255}%"></div>
+                                    <div class="${
+                                        PokemonProvider.less_50(stat.base_stat) ? 'less_50' : 
+                                        PokemonProvider.less_100(stat.base_stat) ? 'less_100' : 
+                                        PokemonProvider.less_150(stat.base_stat) ? 'less_150' : 
+                                        PokemonProvider.less_255(stat.base_stat) ? 'less_255' : 'less_255'}" 
+                                        style="width:${((stat.base_stat)*100)/255}%"></div>
                                 </div>
                                 
                             </div>

@@ -55,4 +55,32 @@ export default class PokemonProvider {
             return null;
         }
     }
+
+    static less_50 = (stat) => {
+        if(stat <= 50){
+            return true
+        }
+        return false
+    }
+
+    static less_100 = (stat) => {
+        if(stat <= 100){
+            return true
+        }
+        return false
+    }
+
+    static less_150 = (stat) => {
+        if(stat <= 150){
+            return true
+        }
+        return false
+    }
+
+    static less_255 = (stat) => {
+        if(stat <= 255){
+            return true
+        }
+        return false
+    }
 }
