@@ -3,6 +3,8 @@ import Utils from "../services/Utils.js";
 
 export default class PokemonShow {
     async render() {
+
+        // let page = 
         let request = Utils.parsRequestURL();
         let pokemon = await PokemonProvider.getPokemon(request.id);
 
@@ -65,7 +67,7 @@ export default class PokemonShow {
 
     </div>
 
-    <a href="/" class="btn-retour">Retour</a>
+    <a href="javascript:history.back()" class="btn-retour">Retour</a>
 
 </section>
         `;
