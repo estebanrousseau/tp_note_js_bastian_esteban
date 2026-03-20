@@ -113,11 +113,12 @@ td {
 
 
 
-
 .pokemon-page {
     max-width: 1000px;
-    margin: 40px auto;
+    justify-self: center;
     padding: 20px;
+    width: 100%;
+    height: 100%;
 }
 
 /* HEADER */
@@ -257,46 +258,57 @@ td {
     cursor: pointer;
 }
 
-/* Container */
-.pagination {
+.pokemon_show{
+    display: grid;
+    grid-template-columns: 15% 70% 15%;
+}
+
+.other_pokemon{
+    justify-self: center;
+    align-self: start;
+    width: 200px;
+    height: 200px;
+    margin-top: 200px;
+}
+
+.other_pokemon_detail {
+    background: white;
+    border-radius: 15px;
+    padding: 10px;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+    transition: transform 0.2s;
+    height: 100%;
+
     display: flex;
-    justify-content: center; /* centre horizontal */
-    align-items: center;
-    gap: 12px; /* espace entre boutons */
-    margin: 30px 0;
+    flex-direction: column;
+    align-items: center;   
+    justify-content: center; 
 }
 
-/* Boutons */
-.pagination button {
-    padding: 12px 18px;
-    font-size: 16px;
+.other_pokemon_detail:hover {
+    transform: scale(1.08);
+}
+
+.other_pokemon_detail img {
+    width: 100%;
+    height: auto;
+    max-height: 140px;
+    object-fit: contain;
+}
+
+.other_pokemon_detail .nom_pokemon {
+    margin-bottom: 15px;
+    font-size: 18px;
     font-weight: bold;
-    border-radius: 10px;
-    border: none;
-    cursor: pointer;
-
-    background: linear-gradient(145deg, #ff4d4d, #cc0000);
-    color: white;
-
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    transition: all 0.2s ease;
+    text-transform: capitalize;
+    text-align: center;
 }
 
-/* Hover */
-.pagination button:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+.other_pokemon_detail .fleche {
+    text-align: center;
 }
 
-/* Bouton actif / désactivé */
-.pagination button:disabled {
-    background: #ccc;
-    color: #666;
-    cursor: default;
-    box-shadow: none;
-}
-
-/* Supprimer le style des liens */
-.pagination a {
+.other_pokemon_detail a{
     text-decoration: none;
+    color: black;
 }
