@@ -5,10 +5,9 @@ export default class Pokedex {
     async render() {
         
         let params = new URLSearchParams(document.location.search);
-        let numero_page = parseInt(params.get("page"));
+        let numero_page = params.get("page");
 
-        let page = numero_page ?? 1
-        // let pokemons_de_page = await PokemonProvider.fetchPokemon(page);
+        let page = parseInt(numero_page ?? 1)
 
         let pokedex = `
             <table>
