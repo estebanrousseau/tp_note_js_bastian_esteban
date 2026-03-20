@@ -54,7 +54,11 @@ main {
 
 body {
     font-family: Arial, sans-serif;
-    background: linear-gradient(lightblue, lightyellow);
+    /* background: linear-gradient(lightblue, lightyellow); */
+    background-image: image-set(
+        "../../public/images/background.png" 
+        );
+    background-attachment: fixed;
 }
 
 table {
