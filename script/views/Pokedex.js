@@ -5,7 +5,7 @@ export default class Pokedex {
     async render() {
         
         let params = new URLSearchParams(document.location.search);
-        let numero_page = params.get("page"); // is the string "Jonathan"
+        let numero_page = parseInt(params.get("page"));
 
         let page = numero_page ?? 1
         // let pokemons_de_page = await PokemonProvider.fetchPokemon(page);
@@ -52,6 +52,8 @@ export default class Pokedex {
                 </tbody>
             </table>`;
 
+        pokedex += `<div class="pagination">`;
+
         if(page == 1){
             pokedex += `
             <button disabled>←</button>`;
@@ -83,10 +85,12 @@ export default class Pokedex {
         }
         else{
             pokedex += `
-            <a href="/?page=${page+1}">
+            <a href="/?page=${page + 1}">
                 <button>→</button>
             </a>`;
         }
+
+        pokedex += `</div>`;
 
         return pokedex
     }
