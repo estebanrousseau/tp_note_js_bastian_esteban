@@ -1,12 +1,13 @@
 import { ENDPOINT } from "../config.js";   
 
 export default class PokemonProvider {
-    static fetchPokemon = async (page)=> {
+    static fetchPokemon = async (limit)=> {
         try {
 
-            const response = await fetch(`${ENDPOINT}/pokemon?offset=${20*(page-1)}&limit=20`); 
+            const response = await fetch(`${ENDPOINT}/pokemon?limit=${limit}`); 
             const json = await response.json();
-            return json.data; 
+            return json;
+            // return json.data; 
             
         } catch (error) {
             console.error(error); 
@@ -28,6 +29,7 @@ export default class PokemonProvider {
             return null;
         }
     }
+
 
     static getType = async (pokemon, no_type) => { // no_type -> soit 0 soit 1
         try {
@@ -55,7 +57,8 @@ export default class PokemonProvider {
             return null;
         }
     }
-
+    
+    
     static less_50 = (stat) => {
         if(stat < 50){
             return true
