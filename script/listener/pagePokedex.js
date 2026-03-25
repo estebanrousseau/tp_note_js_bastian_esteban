@@ -1,7 +1,11 @@
 import PokemonProvider from "../services/PokemonProvider.js";
+import { GENERATIONS } from "../const.js";
 
 const searchInput = document.getElementById("searchInput");
 const searchBtn = document.getElementById("searchBtn");
+const generationFilter = document.getElementById("generationFilter");
+
+let selectedGeneration = localStorage.getItem('selectedGeneration') || '1';
 
 const searchPokemon = async () => {
     let value = searchInput.value.trim().toLowerCase();
@@ -21,15 +25,6 @@ const searchPokemon = async () => {
     }
 };
 
-const loadPokemonList = async () => {
-    let data = await PokemonProvider.fetchPokemon(151)
-
-    pokemonList = data.results.map((p, index) => ({
-        name: p.name,
-        id: index + 1
-    }));
-};
-
 // Entrée clavier
 searchInput.addEventListener("keypress", (e) => {
     if (e.key === "Enter") {
@@ -42,10 +37,54 @@ searchBtn.addEventListener("click", () => {
     searchPokemon();
 });
 
+// Gestion du changement de génération
+generationFilter.addEventListener("change", (e) => {
+    selectedGeneration = e.target.value;
+    localStorage.setItem('selectedGeneration', selectedGeneration);
+    generationFilter.value = selectedGeneration;
+    loadPokemonList();
+
+    // Rafraîchir la page Pokedex
+    window.location.hash = '/';
+});
+
+// Définir la génération sélectionnée au chargement
+window.addEventListener('load', () => {
+    selectedGeneration = localStorage.getItem('selectedGeneration') || '1';
+    generationFilter.value = selectedGeneration;
+    loadPokemonList();
+});
+
+window.addEventListener('hashchange', () => {
+    selectedGeneration = localStorage.getItem('selectedGeneration') || '1';
+    generationFilter.value = selectedGeneration;
+    loadPokemonList();
+});
+
 const suggestions = document.getElementById("suggestions");
 let pokemonList = [];
 
-loadPokemonList();
+
+const loadPokemonList = async () => {
+    selectedGeneration = localStorage.getItem('selectedGeneration') || selectedGeneration || '1';
+    const gen = GENERATIONS[selectedGeneration];
+    if (!gen) {
+        console.warn(`Génération invalide : ${selectedGeneration}`);
+        return;
+    }
+
+    const limit = gen.max - gen.min + 1;
+    const offset = gen.min - 1;
+
+    let res = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`);
+    let data = await res.json();
+
+    pokemonList = data.results.map((p, index) => ({
+        name: p.name,
+        id: gen.min + index
+    }));
+};
+
 
 searchInput.addEventListener("input", () => {
     let value = searchInput.value.toLowerCase().trim();

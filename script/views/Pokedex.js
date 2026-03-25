@@ -1,5 +1,5 @@
 import PokemonProvider from "./../services/PokemonProvider.js";
-import { GENERATIONS } from "./../app.js";
+import { GENERATIONS } from "../const.js";
 import { pokemon_page } from "../const.js";
 
 export default class Pokedex {
@@ -11,7 +11,6 @@ export default class Pokedex {
 
         let page = parseInt(numero_page ?? 1)
 
-        // Obtenir la génération sélectionnée depuis localStorage
         const selectedGen = localStorage.getItem('selectedGeneration') || '1';
         const gen = GENERATIONS[selectedGen];
         const maxId = gen.max;
