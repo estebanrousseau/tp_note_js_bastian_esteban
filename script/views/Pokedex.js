@@ -1,10 +1,11 @@
 import PokemonProvider from "./../services/PokemonProvider.js";
 import { GENERATIONS } from "./../app.js";
+import { pokemon_page } from "../const.js";
 
 export default class Pokedex {
 
     async render() {
-        
+        // console.log(pokemon_page)
         let params = new URLSearchParams(document.location.search);
         let numero_page = params.get("page");
 
@@ -23,7 +24,7 @@ export default class Pokedex {
                 <tbody id = "tbody_pokemon">`;
         
         let row = ``;
-        for (let i = 1; i <= 20; i++) {
+        for (let i = 1; i <= pokemon_page; i++) {
             if ((i - 1) % 5 === 0) {
                 if(row != ``){
                     row += `</tr>`;
