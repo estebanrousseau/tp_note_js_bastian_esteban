@@ -1,4 +1,5 @@
 import PokemonProvider from "./../services/PokemonProvider.js";
+import { GENERATIONS } from "./../app.js";
 import { pokemon_page } from "../const.js";
 
 export default class Pokedex {
@@ -9,6 +10,14 @@ export default class Pokedex {
         let numero_page = params.get("page");
 
         let page = parseInt(numero_page ?? 1)
+
+        // Obtenir la génération sélectionnée depuis localStorage
+        const selectedGen = localStorage.getItem('selectedGeneration') || '1';
+        const gen = GENERATIONS[selectedGen];
+        const maxId = gen.max;
+        const minId = gen.min;
+        const totalPokemon = maxId - minId + 1;
+        const totalPages = Math.ceil(totalPokemon / 20);
 
         let pokedex = `
             <table>
@@ -24,14 +33,16 @@ export default class Pokedex {
                 row = `<tr>`;
             }
         
-            // let pokemon = pokemons_de_page[i]
-            if(i+(pokemon_page*(page-1)) > 151){
+            // Calculer l'ID du Pokémon basé sur la génération
+            const pokemonIndex = minId + i - 1 + (20 * (page - 1));
+            
+            if(pokemonIndex > maxId){
                 break
             }
-            let pokemon = await PokemonProvider.getPokemon(i+(pokemon_page*(page-1)));
+            let pokemon = await PokemonProvider.getPokemon(pokemonIndex);
 
             if (!pokemon) {
-                console.warn(`Pokemon ${i} not loaded`);
+                console.warn(`Pokemon ${pokemonIndex} not loaded`);
                 continue;
             }
         
@@ -66,7 +77,7 @@ export default class Pokedex {
         }
 
 
-        for(let i=0; i<8; i++){
+        for(let i=0; i<totalPages; i++){
             if(page-1 == i){
                 pokedex += `
             <button disabled>${i+1}</button>`;
@@ -79,7 +90,7 @@ export default class Pokedex {
             }
         }
 
-        if(page == 8){
+        if(page == totalPages){
             pokedex += `
              <button disabled>→</button>`;
         }
