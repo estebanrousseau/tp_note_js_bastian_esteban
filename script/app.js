@@ -4,7 +4,6 @@ import Error404 from "./views/Error404.js";
 import Pokedex from "./views/Pokedex.js";
 import PokemonProvider from "./services/PokemonProvider.js";
 
-// Définir les générations et leurs plages
 export const GENERATIONS = {
     1: { name: "Kanto", min: 1, max: 151 },
     2: { name: "Johto", min: 152, max: 251 },
@@ -17,7 +16,6 @@ export const GENERATIONS = {
     9: { name: "Paldea", min: 899, max: 1025 }
 };
 
-// Variable globale pour stocker la génération sélectionnée
 export let selectedGeneration = localStorage.getItem('selectedGeneration') || '1';
 
 const routes = {
