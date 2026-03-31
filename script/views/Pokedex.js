@@ -5,6 +5,44 @@ import Favorites from "../services/Favorites.js";
 
 export default class Pokedex {
 
+    getPrimaryType(pokemon) {
+        return pokemon.types && pokemon.types.length > 0 ? pokemon.types[0].type.name : 'normal';
+    }
+
+    getBorderStyle(pokemon) {
+        const typeColors = {
+            normal: '#A8A878',
+            fire: '#F08030',
+            water: '#6890F0',
+            electric: '#F8D030',
+            grass: '#78C850',
+            ice: '#98D8D8',
+            fighting: '#C03028',
+            poison: '#A040A0',
+            ground: '#E0C068',
+            flying: '#A890F0',
+            psychic: '#F85888',
+            bug: '#A8B820',
+            rock: '#B8A038',
+            ghost: '#705898',
+            dragon: '#7038F8',
+            dark: '#705848',
+            steel: '#B8B8D0',
+            fairy: '#EE99AC'
+        };
+
+        const types = pokemon.types || [];
+        if (types.length === 1) {
+            const color = typeColors[types[0].type.name] || '#A8A878';
+            return `border: 4px solid ${color}; border-radius: 15px;`;
+        } else if (types.length >= 2) {
+            const color1 = typeColors[types[0].type.name] || '#A8A878';
+            const color2 = typeColors[types[1].type.name] || '#A8A878';
+            return `border: 4px solid transparent; border-radius: 15px; border-image: linear-gradient(45deg, ${color1} 0%, ${color1} 40%, ${color2} 60%, ${color2} 100%) 1;`;
+        }
+        return `border: 4px solid #ddd; border-radius: 15px;`;
+    }
+
     async render() {
         // console.log(pokemon_page)
         let params = new URLSearchParams(document.location.search);
@@ -38,9 +76,11 @@ export default class Pokedex {
                 let pokemon = await PokemonProvider.getPokemon(favorites[i]);
                 if (!pokemon) continue;
 
+                const borderStyle = this.getBorderStyle(pokemon);
+
                 let cell = `
                     <td>
-                        <div class="pokemon-card">
+                        <div class="pokemon-card" style="${borderStyle}">
                             <button class="favorite-btn" data-id="${pokemon.id}">★</button>
                             <a href="/#/${pokemon.id}">
                                 <img src="${pokemon.sprites.front_default}" alt="${pokemon.name}">
@@ -82,9 +122,11 @@ export default class Pokedex {
                 continue;
             }
         
+            const borderStyle = this.getBorderStyle(pokemon);
+
             let cell = `
                 <td>
-                    <div class="pokemon-card">
+                    <div class="pokemon-card" style="${borderStyle}">
                         <button class="favorite-btn" data-id="${pokemon.id}">${Favorites.isFavorite(pokemon.id) ? '★' : '☆'}</button>
                         <a href="/#/${pokemon.id}">
                             <img src="${pokemon.sprites.front_default}" alt="${pokemon.name}">
