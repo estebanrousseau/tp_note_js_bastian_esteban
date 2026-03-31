@@ -16,13 +16,21 @@ const router = async () => {
 
     let request = Utils.parsRequestURL();
 
-    // console.log(request.generation)
-    // console.log(gen_to_list(GENERATIONS).includes(request.generation))
-    let num_gen = (gen_to_list(GENERATIONS).indexOf(request.generation))+1
+    // condition qui supprimer les paramettres du paramettre generation si il y en a
+    if(request.generation.includes('?')){
+        var generation = window.location.hash.slice(2, window.location.hash.indexOf('?'))
+        // console.log(generation)
+    }
+    else{
+        var generation = request.generation
+    }
 
-    let parsedURL = (request.generation ? gen_to_list(GENERATIONS).includes(request.generation) ? '/:generation' : '' : '/') +
-                (request.id ? '/:id' : '');
-    // let parsedURL = (request.generation ? '/:generation' : '/') +
+    let num_gen = (gen_to_list(GENERATIONS).indexOf(generation))+1
+    // console.log(request.generation)
+
+    let parsedURL = (request.generation ? gen_to_list(GENERATIONS).includes(generation) ? '/:generation' : '' : '/') +
+                (request.id ? poke_in_gen(num_gen, request.id) ?'/:id' : '' : '');
+
     if(parsedURL.includes('/:generation')){
         localStorage.setItem('selectedGeneration', num_gen)
     }
@@ -42,4 +50,11 @@ export function gen_to_list(GENERATIONS) {
         les_gen.push(GENERATIONS[i+1]['name'].toLowerCase())
     }
     return les_gen
+}
+
+export function poke_in_gen(gen, id) {
+    if(GENERATIONS[gen]['min']<=gen, id && GENERATIONS[gen]['max']>=gen, id){
+        return true
+    }
+    return false
 }

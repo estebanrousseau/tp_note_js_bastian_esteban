@@ -7,14 +7,16 @@ export default class Pokedex {
     async render() {
 
         // console.log(pokemon_page)
-        let params = new URLSearchParams(document.location.search);
+        let hash = document.location.hash;
+        let les_paramettres = hash.includes('?') ? hash.split('?')[1] : '';
+        let params = new URLSearchParams(les_paramettres);
         let numero_page = params.get("page");
 
         let page = parseInt(numero_page ?? 1)
 
         const selectedGen = localStorage.getItem('selectedGeneration') || '1';
         const gen = GENERATIONS[selectedGen];
-        // console.log(gen['name'])
+        console.log(gen)
         const maxId = gen.max;
         const minId = gen.min;
         const totalPokemon = maxId - minId + 1;
@@ -50,7 +52,7 @@ export default class Pokedex {
             let cell = `
                 <td>
                     <div class="pokemon-card">
-                        <a href="/#/${pokemon.id}">
+                        <a href="/#/${gen['name']}/${pokemon.id}">
                             <img src="${pokemon.sprites.front_default}" alt="${pokemon.name}">
                             <p>${pokemon.name}</p>
                         </a>
@@ -72,7 +74,7 @@ export default class Pokedex {
         }
         else{
             pokedex += `
-            <a href="/?page=${page-1}">
+            <a href="/#/${gen['name']}?page=${page-1}">
                 <button>←</button>
             </a>`;
         }
@@ -84,8 +86,10 @@ export default class Pokedex {
             <button disabled>${i+1}</button>`;
             }
             else{
+                // let url = (new URLSearchParams(document.location.search)).append("page", i+1)
+                // console.log(url)
                 pokedex += `
-            <a href="/?page=${i+1}">
+            <a href="/#/${gen['name']}?page=${i+1}">
                 <button>${i+1}</button>
             </a>`;
             }
@@ -97,7 +101,7 @@ export default class Pokedex {
         }
         else{
             pokedex += `
-            <a href="/?page=${page + 1}">
+            <a href="/#/${gen['name']}?page=${page + 1}">
                 <button>→</button>
             </a>`;
         }

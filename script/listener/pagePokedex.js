@@ -60,6 +60,7 @@ window.addEventListener('load', () => {
 window.addEventListener('hashchange', () => {
     selectedGeneration = localStorage.getItem('selectedGeneration') || '1';
     generationFilter.value = selectedGeneration;
+
     loadPokemonList();
 });
 
@@ -70,7 +71,6 @@ let pokemonList = [];
 const loadPokemonList = async () => {
     selectedGeneration = localStorage.getItem('selectedGeneration') || selectedGeneration || '1';
     const gen = GENERATIONS[selectedGeneration];
-    window.location.hash = `/${gen['name'].toLowerCase()}`;
     if (!gen) {
         console.warn(`Génération invalide : ${selectedGeneration}`);
         return;
