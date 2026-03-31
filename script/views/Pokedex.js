@@ -1,6 +1,7 @@
 import PokemonProvider from "./../services/PokemonProvider.js";
 import { GENERATIONS } from "../const.js";
 import { pokemon_page } from "../const.js";
+import Favorites from "../services/Favorites.js";
 
 export default class Pokedex {
 
@@ -18,7 +19,43 @@ export default class Pokedex {
         const totalPokemon = maxId - minId + 1;
         const totalPages = Math.ceil(totalPokemon / 20);
 
-        let pokedex = `
+        let pokedex = ``;
+
+        // Afficher les favoris
+        const favorites = Favorites.getFavorites();
+        if (favorites.length > 0) {
+            pokedex += `<h2>Favoris</h2><table><tbody id="tbody_favorites">`;
+            let row = ``;
+            for (let i = 0; i < favorites.length; i++) {
+                if (i % 5 === 0) {
+                    if (row !== ``) {
+                        row += `</tr>`;
+                        pokedex += row;
+                    }
+                    row = `<tr>`;
+                }
+
+                let pokemon = await PokemonProvider.getPokemon(favorites[i]);
+                if (!pokemon) continue;
+
+                let cell = `
+                    <td>
+                        <div class="pokemon-card">
+                            <button class="favorite-btn" data-id="${pokemon.id}">★</button>
+                            <a href="/#/${pokemon.id}">
+                                <img src="${pokemon.sprites.front_default}" alt="${pokemon.name}">
+                                <p>${pokemon.name}</p>
+                            </a>
+                        </div>
+                    </td>
+                `;
+                row += cell;
+            }
+            row += `</tr>`;
+            pokedex += row + `</tbody></table>`;
+        }
+
+        pokedex += `<h2>Pokédex</h2>
             <table>
                 <tbody id = "tbody_pokemon">`;
         
@@ -48,6 +85,7 @@ export default class Pokedex {
             let cell = `
                 <td>
                     <div class="pokemon-card">
+                        <button class="favorite-btn" data-id="${pokemon.id}">${Favorites.isFavorite(pokemon.id) ? '★' : '☆'}</button>
                         <a href="/#/${pokemon.id}">
                             <img src="${pokemon.sprites.front_default}" alt="${pokemon.name}">
                             <p>${pokemon.name}</p>
