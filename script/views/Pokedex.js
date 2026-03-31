@@ -24,7 +24,7 @@ export default class Pokedex {
         // Afficher les favoris
         const favorites = Favorites.getFavorites();
         if (favorites.length > 0) {
-            pokedex += `<h2>Favoris</h2><table><tbody id="tbody_favorites">`;
+            pokedex += `<h2 class="section-title">Favoris</h2><table><tbody id="tbody_favorites">`;
             let row = ``;
             for (let i = 0; i < favorites.length; i++) {
                 if (i % 5 === 0) {
@@ -55,7 +55,7 @@ export default class Pokedex {
             pokedex += row + `</tbody></table>`;
         }
 
-        pokedex += `<h2>Pokédex</h2>
+        pokedex += `<h2 class="section-title">Pokédex</h2>
             <table>
                 <tbody id = "tbody_pokemon">`;
         

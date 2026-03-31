@@ -47,7 +47,7 @@ header {
     color: #e63946;
 }
 
-h2 {
+.section-title {
     font-size: 2.5em;
     color: #333;
     text-align: center;
@@ -191,6 +191,13 @@ td {
     display: flex;
     gap: 20px;
     margin-top: 30px;
+}
+
+.pokemon-content h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+    text-align: center;
 }
 
 /* CARD */
