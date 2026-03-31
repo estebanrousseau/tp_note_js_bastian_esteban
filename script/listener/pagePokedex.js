@@ -1,5 +1,6 @@
 import PokemonProvider from "../services/PokemonProvider.js";
 import { GENERATIONS } from "../const.js";
+import Favorites from "../services/Favorites.js";
 
 const searchInput = document.getElementById("searchInput");
 const searchBtn = document.getElementById("searchBtn");
@@ -46,6 +47,7 @@ generationFilter.addEventListener("change", (e) => {
 
     // Rafraîchir la page Pokedex
     window.location.hash = '/';
+    // Les listeners seront attachés via hashchange
 });
 
 // Définir la génération sélectionnée au chargement
@@ -118,4 +120,36 @@ document.addEventListener("click", (e) => {
     if (!e.target.closest(".search-box")) {
         suggestions.innerHTML = "";
     }
+});
+
+// Gestion des boutons favoris
+const attachFavoriteListeners = () => {
+    document.querySelectorAll('.favorite-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const pokemonId = parseInt(btn.dataset.id);
+            Favorites.toggleFavorite(pokemonId);
+            // Mettre à jour l'affichage du bouton
+            btn.textContent = Favorites.isFavorite(pokemonId) ? '★' : '☆';
+            // Recharger la page pour mettre à jour l'affichage des favoris
+            window.location.reload();
+        });
+    });
+};
+
+// Attacher les listeners après le chargement de la page
+window.addEventListener('load', () => {
+    selectedGeneration = localStorage.getItem('selectedGeneration') || '1';
+    generationFilter.value = selectedGeneration;
+    loadPokemonList();
+    attachFavoriteListeners();
+});
+
+window.addEventListener('hashchange', () => {
+    selectedGeneration = localStorage.getItem('selectedGeneration') || '1';
+    generationFilter.value = selectedGeneration;
+    loadPokemonList();
+    // Petit délai pour s'assurer que le DOM est mis à jour
+    setTimeout(attachFavoriteListeners, 100);
 });
