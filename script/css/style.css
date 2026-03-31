@@ -86,12 +86,9 @@ td {
     height: 200px;
     padding: 0; 
 }
-.pokemon-card-container {
-    border-radius: 15px;
-}
+
 .pokemon-card {
     background: white;
-    border-radius: 15px;
     padding: 10px;
     box-shadow: 0 6px 14px rgba(0,0,0,0.15);
     transition: transform 0.2s;

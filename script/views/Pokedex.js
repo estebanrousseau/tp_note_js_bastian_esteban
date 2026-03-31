@@ -34,11 +34,11 @@ export default class Pokedex {
         const types = pokemon.types || [];
         if (types.length === 1) {
             const color = typeColors[types[0].type.name] || '#A8A878';
-            return `border: 4px solid ${color}; border-radius: 15px;`;
+            return `border: 4px solid ${color}`;
         } else if (types.length >= 2) {
             const color1 = typeColors[types[0].type.name] || '#A8A878';
             const color2 = typeColors[types[1].type.name] || '#A8A878';
-            return `border: 4px solid transparent; border-radius: 15px; border-image: linear-gradient(45deg, ${color1} 0%, ${color1} 40%, ${color2} 60%, ${color2} 100%) 1;`;
+            return `border: 4px solid transparent; border-image: linear-gradient(45deg, ${color1} 0%, ${color1} 40%, ${color2} 60%, ${color2} 100%) 1;`;
         }
         return `border: 4px solid #ddd; border-radius: 15px;`;
     }
