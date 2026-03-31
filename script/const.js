@@ -23,6 +23,7 @@ export const GENERATIONS = {
     9: { name: "Paldea", min: 899, max: 1025 }
 };
 
+// export const gen_name = gen_to_list()
 export let selectedGeneration = localStorage.getItem('selectedGeneration') || '1';
 
 // export function nb_page(gen){ //int

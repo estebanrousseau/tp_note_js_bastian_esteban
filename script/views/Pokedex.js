@@ -5,6 +5,7 @@ import { pokemon_page } from "../const.js";
 export default class Pokedex {
 
     async render() {
+
         // console.log(pokemon_page)
         let params = new URLSearchParams(document.location.search);
         let numero_page = params.get("page");
@@ -13,6 +14,7 @@ export default class Pokedex {
 
         const selectedGen = localStorage.getItem('selectedGeneration') || '1';
         const gen = GENERATIONS[selectedGen];
+        // console.log(gen['name'])
         const maxId = gen.max;
         const minId = gen.min;
         const totalPokemon = maxId - minId + 1;

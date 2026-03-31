@@ -45,13 +45,15 @@ generationFilter.addEventListener("change", (e) => {
     loadPokemonList();
 
     // Rafraîchir la page Pokedex
-    window.location.hash = '/';
+    const gen = GENERATIONS[selectedGeneration];
+    window.location.hash = `/${gen['name'].toLowerCase()}`;
 });
 
 // Définir la génération sélectionnée au chargement
 window.addEventListener('load', () => {
     selectedGeneration = localStorage.getItem('selectedGeneration') || '1';
     generationFilter.value = selectedGeneration;
+
     loadPokemonList();
 });
 
@@ -68,6 +70,7 @@ let pokemonList = [];
 const loadPokemonList = async () => {
     selectedGeneration = localStorage.getItem('selectedGeneration') || selectedGeneration || '1';
     const gen = GENERATIONS[selectedGeneration];
+    window.location.hash = `/${gen['name'].toLowerCase()}`;
     if (!gen) {
         console.warn(`Génération invalide : ${selectedGeneration}`);
         return;
@@ -105,7 +108,7 @@ searchInput.addEventListener("input", () => {
         `;
 
         li.addEventListener("click", () => {
-            window.location.hash = `/${pokemon.id}`;
+            window.location = `/#/${pokemon.id}`;
             suggestions.innerHTML = "";
         });
 
