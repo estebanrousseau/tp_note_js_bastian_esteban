@@ -12,17 +12,18 @@ export const gen_9 = 120;
 
 
 export const GENERATIONS = {
-    1: { name: "Kanto", min: 1, max: 151 },
-    2: { name: "Johto", min: 152, max: 251 },
-    3: { name: "Hoenn", min: 252, max: 386 },
-    4: { name: "Sinnoh", min: 387, max: 493 },
-    5: { name: "Unova", min: 494, max: 649 },
-    6: { name: "Kalos", min: 650, max: 721 },
-    7: { name: "Alola", min: 722, max: 809 },
-    8: { name: "Galar", min: 810, max: 898 },
-    9: { name: "Paldea", min: 899, max: 1025 }
+    1: { name: "kanto", min: 1, max: 151 },
+    2: { name: "johto", min: 152, max: 251 },
+    3: { name: "hoenn", min: 252, max: 386 },
+    4: { name: "sinnoh", min: 387, max: 493 },
+    5: { name: "unova", min: 494, max: 649 },
+    6: { name: "kalos", min: 650, max: 721 },
+    7: { name: "alola", min: 722, max: 809 },
+    8: { name: "galar", min: 810, max: 898 },
+    9: { name: "paldea", min: 899, max: 1025 }
 };
 
+// export const gen_name = gen_to_list()
 export let selectedGeneration = localStorage.getItem('selectedGeneration') || '1';
 
 // export function nb_page(gen){ //int
