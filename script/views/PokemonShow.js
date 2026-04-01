@@ -1,5 +1,6 @@
 import PokemonProvider from "../services/PokemonProvider.js";
 import Utils from "../services/Utils.js";
+import Ratings from "../services/Ratings.js";
 import { GENERATIONS } from "../const.js";
 
 export default class PokemonShow {
@@ -63,6 +64,14 @@ export default class PokemonShow {
                     
                     <div class="pokemon-info">
                         <h1>${pokemon[0].name}</h1>
+
+                        <div class="rating" data-pokemon-id="${pokemon[0].id}" data-pokemon-name="${pokemon[0].name}">
+                            ${[1,2,3,4,5].map(star => `
+                                <button type="button" class="star-btn ${star <= Ratings.getRating(pokemon[0].id) ? 'filled' : ''}" data-star="${star}" aria-label="${star} étoiles">
+                                    ★
+                                </button>
+                            `).join("")}
+                        </div>
 
                         <div class="types">
                             ${types.map(type => `

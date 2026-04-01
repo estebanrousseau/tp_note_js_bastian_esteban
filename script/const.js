@@ -23,6 +23,9 @@ export const GENERATIONS = {
     9: { name: "paldea", min: 899, max: 1025 }
 };
 
+export const RATINGS_STORAGE_KEY = 'pokemon_ratings';
+export const POKEMON_RATINGS = JSON.parse(localStorage.getItem(RATINGS_STORAGE_KEY)) || {};
+
 // export const gen_name = gen_to_list()
 export let selectedGeneration = localStorage.getItem('selectedGeneration') || '1';
 

@@ -1,6 +1,7 @@
 import PokemonProvider from "../services/PokemonProvider.js";
 import { GENERATIONS } from "../const.js";
 import Favorites from "../services/Favorites.js";
+import Ratings from "../services/Ratings.js";
 
 const searchInput = document.getElementById("searchInput");
 const searchBtn = document.getElementById("searchBtn");
@@ -113,6 +114,24 @@ document.addEventListener("click", (e) => {
 
 // Gestion des boutons favoris via délégation d'événements
 window.addEventListener('click', (e) => {
+    const starBtn = e.target.closest('.star-btn');
+    if (starBtn) {
+        const ratingContainer = starBtn.closest('.rating');
+        if (ratingContainer) {
+            const pokemonId = Number(ratingContainer.dataset.pokemonId);
+            const pokemonName = ratingContainer.dataset.pokemonName || null;
+            const starValue = Number(starBtn.dataset.star);
+            if (Number.isInteger(pokemonId) && Number.isInteger(starValue)) {
+                Ratings.setRating(pokemonId, starValue, { name: pokemonName });
+                const stars = ratingContainer.querySelectorAll('.star-btn');
+                stars.forEach((star) => {
+                    const value = Number(star.dataset.star);
+                    star.classList.toggle('filled', value <= starValue);
+                });
+            }
+        }
+    }
+
     const btn = e.target.closest('.favorite-btn');
     if (!btn) {
         return;
