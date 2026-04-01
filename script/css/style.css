@@ -89,7 +89,6 @@ td {
 
 .pokemon-card {
     background: white;
-    border-radius: 15px;
     padding: 10px;
     box-shadow: 0 6px 14px rgba(0,0,0,0.15);
     transition: transform 0.2s;
@@ -101,6 +100,7 @@ td {
     justify-content: center;
     position: relative;
 }
+
 
 .pokemon-card:hover {
     transform: scale(1.08);
@@ -136,6 +136,11 @@ td {
     cursor: pointer;
     color: #ffd700;
     z-index: 10;
+}
+
+/* Styles pour les types de Pokémon */
+.pokemon-card {
+    border: 4px solid #ddd;
 }
 
 
