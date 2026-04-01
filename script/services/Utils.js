@@ -3,11 +3,11 @@ const Utils = {
         let url = location.hash.slice(1).toLocaleLowerCase() || '/';
         let r = url.split('/');
         let request = {
+            generation : null,
             id : null,
-            // param : null
         };
-        request.id = r[1];
-        // request.param = r[2]
+        request.generation = r[1]
+        request.id = r[2];
         return request;
     }
 }
