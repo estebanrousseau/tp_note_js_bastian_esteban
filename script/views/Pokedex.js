@@ -86,7 +86,7 @@ export default class Pokedex {
                     <td>
                         <div class="pokemon-card" style="${borderStyle}">
                             <button class="favorite-btn" data-id="${pokemon.id}">★</button>
-                            <a href="/#/${pokemon.id}">
+                            <a href="/#/${gen['name']}/${pokemon.id}">
                                 <img src="${pokemon.sprites.front_default}" alt="${pokemon.name}">
                                 <p>${pokemon.name}</p>
                             </a>
