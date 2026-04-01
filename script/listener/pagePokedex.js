@@ -16,7 +16,8 @@ const searchPokemon = async () => {
             let pokemon = await PokemonProvider.getPokemon(value);
 
             if (pokemon) {
-                window.location.hash = `/${pokemon.id}`;
+                const gen = GENERATIONS[selectedGeneration] || GENERATIONS[1];
+                window.location.hash = `/${gen.name.toLowerCase()}/${pokemon.id}`;
             } else {
                 alert("Pokémon introuvable");
             }
@@ -94,7 +95,8 @@ searchInput.addEventListener("input", () => {
         `;
 
         li.addEventListener("click", () => {
-            window.location = `/#/${pokemon.id}`;
+            const gen = GENERATIONS[selectedGeneration] || GENERATIONS[1];
+            window.location.hash = `/${gen.name.toLowerCase()}/${pokemon.id}`;
             suggestions.innerHTML = "";
         });
 
