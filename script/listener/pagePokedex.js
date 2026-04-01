@@ -50,21 +50,6 @@ generationFilter.addEventListener("change", (e) => {
     window.location.hash = `/${gen['name'].toLowerCase()}`;
 });
 
-// Définir la génération sélectionnée au chargement
-window.addEventListener('load', () => {
-    selectedGeneration = localStorage.getItem('selectedGeneration') || '1';
-    generationFilter.value = selectedGeneration;
-
-    loadPokemonList();
-});
-
-window.addEventListener('hashchange', () => {
-    selectedGeneration = localStorage.getItem('selectedGeneration') || '1';
-    generationFilter.value = selectedGeneration;
-
-    loadPokemonList();
-});
-
 const suggestions = document.getElementById("suggestions");
 let pokemonList = [];
 
@@ -124,34 +109,34 @@ document.addEventListener("click", (e) => {
     }
 });
 
-// Gestion des boutons favoris
-const attachFavoriteListeners = () => {
-    document.querySelectorAll('.favorite-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            const pokemonId = parseInt(btn.dataset.id);
-            Favorites.toggleFavorite(pokemonId);
-            // Mettre à jour l'affichage du bouton
-            btn.textContent = Favorites.isFavorite(pokemonId) ? '★' : '☆';
-            // Recharger la page pour mettre à jour l'affichage des favoris
-            window.location.reload();
-        });
-    });
-};
+// Gestion des boutons favoris via délégation d'événements
+window.addEventListener('click', (e) => {
+    const btn = e.target.closest('.favorite-btn');
+    if (!btn) {
+        return;
+    }
 
-// Attacher les listeners après le chargement de la page
+    e.preventDefault();
+    e.stopPropagation();
+
+    const pokemonId = Number(btn.dataset.id);
+    if (!Number.isInteger(pokemonId)) {
+        return;
+    }
+
+    Favorites.toggleFavorite(pokemonId);
+    btn.textContent = Favorites.isFavorite(pokemonId) ? '★' : '☆';
+    window.location.reload();
+});
+
 window.addEventListener('load', () => {
     selectedGeneration = localStorage.getItem('selectedGeneration') || '1';
     generationFilter.value = selectedGeneration;
     loadPokemonList();
-    attachFavoriteListeners();
 });
 
 window.addEventListener('hashchange', () => {
     selectedGeneration = localStorage.getItem('selectedGeneration') || '1';
     generationFilter.value = selectedGeneration;
     loadPokemonList();
-    // Petit délai pour s'assurer que le DOM est mis à jour
-    setTimeout(attachFavoriteListeners, 100);
 });
