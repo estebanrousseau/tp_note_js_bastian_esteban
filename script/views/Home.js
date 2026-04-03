@@ -1,4 +1,4 @@
-export default class Error404{
+export default class Home{
     async render(){
         let view = `
             <h2>Home</h2>
