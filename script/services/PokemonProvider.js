@@ -57,6 +57,26 @@ export default class PokemonProvider {
             return null;
         }
     }
+
+    static getPokemonSpecies = async (identifier) => {
+        try {
+            if (!identifier) throw new Error('Species identifier manquant');
+            let url = null;
+            if (typeof identifier === 'string' && identifier.startsWith('http')) {
+                url = identifier;
+            } else {
+                url = `${ENDPOINT}/pokemon-species/${identifier}`;
+            }
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`Pokemon species ${identifier} not found: ${response.status}`);
+            }
+            return await response.json();
+        } catch (error) {
+            console.error(error);
+            return null;
+        }
+    }
     
     
     static less_50 = (stat) => {

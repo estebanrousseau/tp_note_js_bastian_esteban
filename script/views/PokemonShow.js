@@ -14,20 +14,48 @@ export default class PokemonShow {
         let pokemon = []
         pokemon.push(await PokemonProvider.getPokemon(request.id)); // Le pokemon actuel
 
-        let id = parseInt(request.id)
-        if(id != 1 && id != 1025){
-            pokemon.push(await PokemonProvider.getPokemon(id+1)); // le pokemon suivant
-            pokemon.push(await PokemonProvider.getPokemon(id-1)); // le pokemon précédent
-        }
-        if(id == 1){
-            pokemon.push(await PokemonProvider.getPokemon(id+1)); // le pokemon suivant
-            pokemon.push(null)
-        }
-        if(id == 1025){
-            pokemon.push(null)
-            pokemon.push(await PokemonProvider.getPokemon(id-1)); // le pokemon précédent
+        let id = parseInt(request.id);
+        if (!isNaN(id)) {
+            if(id !== 1 && id !== 1025){
+                pokemon.push(await PokemonProvider.getPokemon(id+1)); // le pokemon suivant
+                pokemon.push(await PokemonProvider.getPokemon(id-1)); // le pokemon précédent
+            }
+            if(id === 1){
+                pokemon.push(await PokemonProvider.getPokemon(id+1)); // le pokemon suivant
+                pokemon.push(null)
+            }
+            if(id === 1025){
+                pokemon.push(null)
+                pokemon.push(await PokemonProvider.getPokemon(id-1)); // le pokemon précédent
+            }
+        } else {
+            pokemon.push(null);
+            pokemon.push(null);
         }
 
+
+        // Détection des formes alternatives
+        let formCandidates = [pokemon[0].name];
+        const species = await PokemonProvider.getPokemonSpecies(pokemon[0].species?.url ?? pokemon[0].species?.name);
+        if (species && Array.isArray(species.varieties)) {
+            species.varieties.forEach((v) => {
+                const formName = v.pokemon?.name;
+                if (formName && !formCandidates.includes(formName)) {
+                    formCandidates.push(formName);
+                }
+            });
+        }
+
+        const selectedId = parseInt(request.id);
+        if (!isNaN(selectedId)) {
+            const altFormId = selectedId + 10000;
+            const altPokemon = await PokemonProvider.getPokemon(altFormId);
+            if (altPokemon && altPokemon.name && altPokemon.species?.name === pokemon[0].species?.name && !formCandidates.includes(altPokemon.name)) {
+                formCandidates.push(altPokemon.name);
+            }
+        }
+
+        const currentFormIndex = formCandidates.indexOf(pokemon[0].name);
 
         // Récupération des types
         let types = [];
@@ -35,6 +63,18 @@ export default class PokemonShow {
         if (pokemon[0].types.length > 1) {
             types.push(await PokemonProvider.getType(pokemon[0], 1));
         }
+
+        const formsJsonEscaped = (JSON.stringify(formCandidates) || '[]').replace(/"/g, '&quot;');
+
+        const formToggleSection = formCandidates.length > 1 ? `
+            <div class="form-toggle-container">
+                <button id="toggle-form-btn" data-current-index="${currentFormIndex}" type="button">
+                    Passer à : ${formCandidates[(currentFormIndex + 1) % formCandidates.length]}
+                </button>
+                <input type="hidden" id="pokemon-forms-data" value="${formsJsonEscaped}">
+                <input type="hidden" id="pokemon-base-id" value="${pokemon[0].id}">
+            </div>
+        ` : '';
 
         // HTML complet
         let view = `
@@ -63,7 +103,8 @@ export default class PokemonShow {
                     <img class="pokemon-img" src="${pokemon[0].sprites.front_default}" alt="${pokemon[0].name}">
                     
                     <div class="pokemon-info">
-                        <h1>${pokemon[0].name}</h1>
+                        <h1 id="pokemon-name">${pokemon[0].name}</h1>
+                        ${formToggleSection}
 
                         <div class="rating" data-pokemon-id="${pokemon[0].id}" data-pokemon-name="${pokemon[0].name}">
                             ${[1,2,3,4,5].map(star => `

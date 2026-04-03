@@ -132,6 +132,37 @@ window.addEventListener('click', (e) => {
         }
     }
 
+    const formToggleBtn = e.target.closest('#toggle-form-btn');
+    if (formToggleBtn) {
+        const formsInput = document.getElementById('pokemon-forms-data');
+        const baseIdInput = document.getElementById('pokemon-base-id');
+        if (!formsInput || !baseIdInput) return;
+
+        let forms = [];
+        try {
+            forms = JSON.parse(formsInput.value.replace(/&quot;/g, '"'));
+        } catch {
+            return;
+        }
+
+        if (!Array.isArray(forms) || forms.length === 0) return;
+
+        const baseId = baseIdInput.value;
+        let currentIndex = Number(formToggleBtn.getAttribute('data-current-index')) || 0;
+        const nextIndex = (currentIndex + 1) % forms.length;
+        const nextFormName = forms[nextIndex];
+
+        formToggleBtn.setAttribute('data-current-index', nextIndex);
+        formToggleBtn.textContent = `Passer à : ${forms[(nextIndex + 1) % forms.length]}`;
+
+        const selectedGeneration = localStorage.getItem('selectedGeneration') || '1';
+        const gen = GENERATIONS[selectedGeneration] || GENERATIONS[1];
+
+        const targetIdOrName = (nextIndex === 0 ? baseId : nextFormName);
+        window.location.hash = `/${gen.name}/${targetIdOrName}`;
+        return;
+    }
+
     const btn = e.target.closest('.favorite-btn');
     if (!btn) {
         return;
