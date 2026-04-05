@@ -30,6 +30,20 @@ export default class PokemonProvider {
         }
     }
 
+    static getObjet = async (id) => {
+        try {
+            const response = await fetch(`${ENDPOINT}/item/${id}`); 
+            if (!response.ok) {
+                throw new Error(`Item ${id} not found: ${response.status}`);
+            }
+            const json = await response.json();
+            return json;
+            
+        } catch (error) {
+            console.error(error);
+            return null;
+        }
+    }
 
     static getType = async (pokemon, no_type) => { // no_type -> soit 0 soit 1
         try {

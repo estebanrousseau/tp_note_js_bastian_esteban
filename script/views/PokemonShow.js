@@ -114,6 +114,7 @@ export default class PokemonShow {
                     <div class="pokemon item-card">
                         <h2>Objet</h2>
                         <img src="${pokemon[0].sprites.front_default}" alt="objet">
+                        <a href="/#/objets/choose"><button type="button">Add item</button></a>
                     </div>
 
                 </div>
